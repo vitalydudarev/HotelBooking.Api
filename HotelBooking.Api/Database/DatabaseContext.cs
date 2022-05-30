@@ -9,6 +9,9 @@ public class DatabaseContext : DbContext
     private readonly IConfiguration? _configuration;
 
     public DbSet<UserEntity> Users { get; set; }
+    public DbSet<HotelEntity> Hotels { get; set; }
+    public DbSet<FacilityEntity> Facilities { get; set; }
+    public DbSet<HotelFacilityEntity> HotelFacilities { get; set; }
 
     public DatabaseContext(IConfiguration configuration, DbContextOptions<DatabaseContext> options)
         : base(options)
@@ -19,6 +22,9 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new HotelConfiguration());
+        modelBuilder.ApplyConfiguration(new FacilityConfiguration());
+        modelBuilder.ApplyConfiguration(new HotelFacilityConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

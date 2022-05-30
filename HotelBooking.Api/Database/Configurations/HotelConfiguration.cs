@@ -14,6 +14,9 @@ public class HotelConfiguration : IEntityTypeConfiguration<HotelEntity>
             .Property(a => a.Name)
             .IsRequired();
         builder
+            .Property(a => a.Description)
+            .IsRequired();
+        builder
             .Property(a => a.Address)
             .IsRequired();
         builder.ToTable("Hotels");

@@ -14,6 +14,8 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(opt =>
     opt.UseNpgsql(configuration.GetConnectionString("DatabaseContext")));
 
+builder.Services.AddAutoMapper(typeof(Program)); 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
