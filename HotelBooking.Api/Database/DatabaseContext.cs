@@ -14,6 +14,7 @@ public class DatabaseContext : DbContext
     public DbSet<HotelFacilityEntity> HotelFacilities { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<RoomType> RoomTypes { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
 
     public DatabaseContext(IConfiguration configuration, DbContextOptions<DatabaseContext> options)
         : base(options)
@@ -29,6 +30,7 @@ public class DatabaseContext : DbContext
         modelBuilder.ApplyConfiguration(new HotelFacilityConfiguration());
         modelBuilder.ApplyConfiguration(new RoomConfiguration());
         modelBuilder.ApplyConfiguration(new RoomTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ReservationConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
