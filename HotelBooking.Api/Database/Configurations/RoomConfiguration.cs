@@ -17,6 +17,9 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
             .Property(a => a.RoomNumber)
             .IsRequired();
         builder
+            .Property(a => a.Price)
+            .IsRequired();
+        builder
             .HasOne(a => a.RoomType)
             .WithMany(b => b.Rooms)
             .HasForeignKey(c => c.RoomTypeId);

@@ -9,6 +9,7 @@ public class Room
     
     public int RoomNumber { get; set; }
     public string Title { get; set; }
+    public long Price { get; set; }
     
     public long RoomTypeId { get; set; }
     public RoomType RoomType { get; set; }
