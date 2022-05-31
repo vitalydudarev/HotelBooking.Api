@@ -6,4 +6,6 @@ public class UserEntity
     public string Email { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
+    
+    public ICollection<Reservation> Reservations { get; set; }
 }

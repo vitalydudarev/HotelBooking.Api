@@ -12,4 +12,6 @@ public class Room
     
     public long RoomTypeId { get; set; }
     public RoomType RoomType { get; set; }
+    
+    public ICollection<Reservation> Reservations { get; set; }
 }
