@@ -16,7 +16,7 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder
             .Property(a => a.Name);
         builder
-            .Property(a => a.Surname);;
+            .Property(a => a.Surname);
         builder.ToTable("Users");
     }
 }
