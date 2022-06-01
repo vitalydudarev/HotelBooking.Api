@@ -1,4 +1,3 @@
-using HotelBooking.Api.Services;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 

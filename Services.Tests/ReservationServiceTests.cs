@@ -1,10 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using HotelBooking.Api;
-using HotelBooking.Api.Database.Entities;
-using HotelBooking.Api.Repositories;
-using HotelBooking.Api.Services;
+using HotelBooking.Domain.Models;
+using HotelBooking.Domain.Repositories;
+using HotelBooking.Services.Services;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
@@ -20,7 +19,7 @@ public class ReservationServiceTests
     {
         var mockMapper = new MapperConfiguration(cfg =>
         {
-            cfg.AddProfile(new ModelEntityMappingProfile());
+            cfg.CreateMap<Reservation, ReservationDetails>();
         });
         _mapper = mockMapper.CreateMapper();
         

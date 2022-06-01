@@ -20,4 +20,16 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\HotelBooking.Database\HotelBooking.Database.csproj" />
+      <ProjectReference Include="..\HotelBooking.Domain\HotelBooking.Domain.csproj" />
+      <ProjectReference Include="..\HotelBooking.Services\HotelBooking.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="HotelBooking.Api">
+        <HintPath>..\Services.Tests\bin\Debug\net6.0\HotelBooking.Api.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

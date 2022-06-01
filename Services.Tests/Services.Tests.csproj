@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="Moq" Version="4.18.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
@@ -22,7 +23,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HotelBooking.Api\HotelBooking.Api.csproj" />
+      <ProjectReference Include="..\HotelBooking.Domain\HotelBooking.Domain.csproj" />
+      <ProjectReference Include="..\HotelBooking.Services\HotelBooking.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+        <HintPath>..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\6.0.5\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

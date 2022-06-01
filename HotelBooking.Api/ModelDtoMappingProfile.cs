@@ -1,7 +1,6 @@
 using AutoMapper;
-using HotelBooking.Api.Database.Entities;
 using HotelBooking.Api.DTOs;
-using HotelBooking.Api.Models;
+using HotelBooking.Domain.Models;
 
 namespace HotelBooking.Api;
 
@@ -14,5 +13,9 @@ public class ModelDtoMappingProfile : Profile
         CreateMap<RoomType, RoomTypeDto>().ReverseMap();
         CreateMap<Room, RoomDto>().ReverseMap();
         CreateMap<ReservationDetails, ReservationDetailsDto>().ReverseMap();
+        CreateMap<Reservation, OutgoingReservationDto>();
+        CreateMap<IncomingReservationDto, Reservation>();
+
+        CreateMap<Reservation, ReservationDetails>();
     }
 }

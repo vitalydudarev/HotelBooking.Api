@@ -1,5 +1,5 @@
-using HotelBooking.Api.Models;
-using HotelBooking.Api.Services;
+using HotelBooking.Domain.Models;
+using HotelBooking.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBooking.Api.Controllers;

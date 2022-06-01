@@ -1,8 +1,11 @@
 using HotelBooking.Api;
-using HotelBooking.Api.Database;
 using HotelBooking.Api.Middlewares;
-using HotelBooking.Api.Repositories;
-using HotelBooking.Api.Services;
+using HotelBooking.Database;
+using HotelBooking.Database.Repositories;
+using HotelBooking.Domain.Repositories;
+using HotelBooking.Domain.Services;
+using HotelBooking.Services;
+using HotelBooking.Services.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,16 +31,7 @@ builder.Services.AddScoped<IReservationService, ReservationService>();
 
 var value = configuration.GetValue<string>("Cache:CacheType");
 
-builder.Services.AddSingleton<IHotelCache>(serviceProvider  =>
-{
-    switch (value)
-    {
-        case "Memory":
-            return new HotelCache();
-        default:
-            throw new NotSupportedException("Cache type is not specified or unsupported.");
-    }
-});
+CacheFactory.AddCacheService(value, builder.Services);
 
 var app = builder.Build();
 

@@ -1,8 +1,7 @@
 using AutoMapper;
-using HotelBooking.Api.Database.Entities;
 using HotelBooking.Api.DTOs;
-using HotelBooking.Api.Models;
-using HotelBooking.Api.Services;
+using HotelBooking.Domain.Models;
+using HotelBooking.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBooking.Api.Controllers;
