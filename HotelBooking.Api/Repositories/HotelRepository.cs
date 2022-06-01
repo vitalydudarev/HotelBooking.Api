@@ -13,12 +13,22 @@ public class HotelRepository : IHotelRepository
         _context = context;
     }
     
-    public async Task<IEnumerable<HotelEntity>> GetHotelsAsync(int pageNumber, int pageSize)
+    public async Task<IEnumerable<HotelEntity>> GetHotelsAsync(PaginationParameters? paginationParameters)
     {
-        return await _context.Hotels
-            .OrderBy(a => a.Id)
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        var queryable = _context.Hotels.AsNoTracking().OrderBy(a => a.Id).AsQueryable();
+
+        if (paginationParameters != null)
+        {
+            queryable = queryable
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize);
+        }
+        
+        return await queryable.ToListAsync();
+    }
+    
+    public IEnumerable<HotelEntity> GetHotels()
+    {
+        return _context.Hotels.AsNoTracking().OrderBy(a => a.Id).ToList();
     }
 }

@@ -5,10 +5,10 @@ namespace HotelBooking.Api.Services;
 
 public interface IHotelService
 {
-    Task<IEnumerable<HotelEntity>> GetHotelsAsync(int pageNumber, int pageSize);
-    IEnumerable<HotelEntity> GetPopularHotels();
-    IEnumerable<HotelEntity> GetRecommendedHotels();
-    IEnumerable<HotelEntity> GetTopRatedHotels();
-    IEnumerable<HotelEntity> SearchHotel(string query);
+    IEnumerable<Hotel> GetHotels(int pageNumber, int pageSize);
+    IEnumerable<Hotel> GetPopularHotels();
+    IEnumerable<Hotel> GetRecommendedHotels();
+    IEnumerable<Hotel> GetTopRatedHotels();
+    IEnumerable<Hotel> SearchHotel(string query);
     IEnumerable<string> GetTopDestinations();
 }

@@ -1,3 +1,4 @@
+using HotelBooking.Api;
 using HotelBooking.Api.Database;
 using HotelBooking.Api.Middlewares;
 using HotelBooking.Api.Repositories;
@@ -19,11 +20,24 @@ builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(opt =>
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddTransient<IReservationRepository, ReservationRepository>();
-builder.Services.AddTransient<IHotelRepository, HotelRepository>();
+builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+builder.Services.AddScoped<IHotelRepository, HotelRepository>();
 
-builder.Services.AddTransient<IHotelService, HotelService>();
-builder.Services.AddTransient<IReservationService, ReservationService>();
+builder.Services.AddScoped<IHotelService, HotelService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+
+var value = configuration.GetValue<string>("Cache:CacheType");
+
+builder.Services.AddSingleton<IHotelCache>(serviceProvider  =>
+{
+    switch (value)
+    {
+        case "Memory":
+            return new HotelCache();
+        default:
+            throw new NotSupportedException("Cache type is not specified or unsupported.");
+    }
+});
 
 var app = builder.Build();
 
@@ -43,3 +57,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

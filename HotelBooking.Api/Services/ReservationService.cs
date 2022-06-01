@@ -1,61 +1,64 @@
 using AutoMapper;
-using HotelBooking.Api.Database;
 using HotelBooking.Api.Database.Entities;
 using HotelBooking.Api.Models;
 using HotelBooking.Api.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.Api.Services;
 
 public class ReservationService : IReservationService
 {
     private readonly ILogger<HotelService> _logger;
-    private readonly DatabaseContext _context;
     private readonly IReservationRepository _reservationRepository;
     private readonly IMapper _mapper;
 
     public ReservationService(
         ILogger<HotelService> logger,
-        IReservationRepository reservationRepository,
         IMapper mapper,
-        DatabaseContext context)
+        IReservationRepository reservationRepository)
     {
         _logger = logger;
         _reservationRepository = reservationRepository;
-        _context = context;
         _mapper = mapper;
     }
 
     public async Task<IEnumerable<Reservation>> GetUserReservationsAsync(long userId)
     {
-        return await _context.Reservations.AsNoTracking().Where(a => a.UserId == userId).ToListAsync();
+        _logger.LogInformation("Retrieving user {UserId} reservations", userId);
+        
+        return await _reservationRepository.GetUserReservationsAsync(userId);
     }
     
-    public async Task<ReservationDetails> GetReservationDetailsAsync(long reservationId)
+    public async Task<ReservationDetails> GetReservationDetailsAsync(long id)
     {
-        var reservation = await _reservationRepository.GetReservationDetailsAsync(reservationId);
+        _logger.LogInformation("Retrieving reservation details for reservation {Id}", id);
+        
+        var reservation = await _reservationRepository.GetReservationDetailsAsync(id);
         var totalDays = (reservation.EndDate - reservation.StartDate).Days;
         var totalPrice = reservation.Room.Price * totalDays;
 
         var reservationDetails = _mapper.Map<ReservationDetails>(reservation);
         reservationDetails.TotalPrice = totalPrice;
-
+        
+        _logger.LogInformation("Retrieved reservation details for reservation {Id}", id);
+        
         return reservationDetails;
     }
 
     public async Task AddReservationAsync(Reservation reservation)
     {
-        await _context.Reservations.AddAsync(reservation);
-        await _context.SaveChangesAsync();
+        _logger.LogInformation("Adding reservation for user {UserId}", reservation.UserId);
+        
+        await _reservationRepository.AddReservationAsync(reservation);
+        
+        _logger.LogInformation("Added reservation for user {UserId}", reservation.UserId);
     }
     
-    public async Task RemoveReservation(long id)
+    public async Task RemoveReservationAsync(long id)
     {
-        var reservation = await _context.Reservations.FirstOrDefaultAsync(a => a.Id == id);
-        if (reservation != null)
-        {
-            _context.Reservations.Remove(reservation);
-            await _context.SaveChangesAsync();
-        }
+        _logger.LogInformation("Removing reservation {Id}", id);
+        
+        await _reservationRepository.RemoveReservationAsync(id);
+        
+        _logger.LogInformation("Removing reservation {Id}", id);
     }
 }

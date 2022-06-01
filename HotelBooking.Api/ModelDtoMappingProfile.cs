@@ -5,13 +5,10 @@ using HotelBooking.Api.Models;
 
 namespace HotelBooking.Api;
 
-public class MappingProfile : Profile
+public class ModelDtoMappingProfile : Profile
 {
-    public MappingProfile()
+    public ModelDtoMappingProfile()
     {
-        CreateMap<Hotel, HotelEntity>().ReverseMap();
-        CreateMap<Reservation, OutgoingReservationDto>();
-        CreateMap<IncomingReservationDto, Reservation>();
         CreateMap<Reservation, ReservationDetails>();
         CreateMap<Hotel, HotelDto>().ReverseMap();
         CreateMap<RoomType, RoomTypeDto>().ReverseMap();

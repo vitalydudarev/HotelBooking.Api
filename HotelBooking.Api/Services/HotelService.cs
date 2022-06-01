@@ -1,46 +1,47 @@
-using HotelBooking.Api.Database;
-using HotelBooking.Api.Database.Entities;
+using AutoMapper;
 using HotelBooking.Api.Models;
-using Microsoft.EntityFrameworkCore;
+using HotelBooking.Api.Repositories;
 
 namespace HotelBooking.Api.Services;
 
 public class HotelService : IHotelService
 {
     private readonly ILogger<HotelService> _logger;
-    private readonly DatabaseContext _context;
+    private readonly IHotelRepository _hotelRepository;
+    private readonly IHotelCache _hotelCache;
+    private readonly IMapper _mapper;
 
-    public HotelService(ILogger<HotelService> logger, DatabaseContext context)
+    public HotelService(ILogger<HotelService> logger, IMapper mapper, IHotelRepository hotelRepository, IHotelCache hotelCache)
     {
         _logger = logger;
-        _context = context;
+        _mapper = mapper;
+        _hotelRepository = hotelRepository;
+        _hotelCache = hotelCache;
+
+        InitCache();
     }
 
-    public async Task<IEnumerable<HotelEntity>> GetHotelsAsync(int pageNumber, int pageSize)
+    public IEnumerable<Hotel> GetHotels(int pageNumber, int pageSize)
     {
-        return await _context.Hotels
-            .OrderBy(a => a.Id)
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
+        return _hotelCache.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize);
     }
 
-    public IEnumerable<HotelEntity> GetPopularHotels()
-    {
-        throw new NotImplementedException();
-    }
-
-    public IEnumerable<HotelEntity> GetRecommendedHotels()
+    public IEnumerable<Hotel> GetPopularHotels()
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<HotelEntity> GetTopRatedHotels()
+    public IEnumerable<Hotel> GetRecommendedHotels()
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<HotelEntity> SearchHotel(string query)
+    public IEnumerable<Hotel> GetTopRatedHotels()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Hotel> SearchHotel(string query)
     {
         throw new NotImplementedException();
     }
@@ -48,5 +49,20 @@ public class HotelService : IHotelService
     public IEnumerable<string> GetTopDestinations()
     {
         throw new NotImplementedException();
+    }
+
+    private void InitCache()
+    {
+        _logger.LogInformation("Initializing cache");
+        
+        var hotelEntities = _hotelRepository.GetHotels();
+        var hotels = _mapper.Map<IEnumerable<Hotel>>(hotelEntities);
+        
+        foreach (var hotel in hotels)
+        {
+            _hotelCache.Add(hotel.Id, hotel);
+        }
+        
+        _logger.LogInformation("Initialized cache");
     }
 }

@@ -4,5 +4,6 @@ namespace HotelBooking.Api.Repositories;
 
 public interface IHotelRepository
 {
-    Task<IEnumerable<HotelEntity>> GetHotelsAsync(int pageNumber, int pageSize);
+    Task<IEnumerable<HotelEntity>> GetHotelsAsync(PaginationParameters? paginationParameters);
+    IEnumerable<HotelEntity> GetHotels();
 }
