@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HotelBooking.Database.Configurations;
 
-public class FacilityConfiguration : IEntityTypeConfiguration<FacilityEntity>
+public class FacilityConfiguration : IEntityTypeConfiguration<Facility>
 {
-    public void Configure(EntityTypeBuilder<FacilityEntity> builder)
+    public void Configure(EntityTypeBuilder<Facility> builder)
     {
         builder
             .HasKey(a => a.Id);

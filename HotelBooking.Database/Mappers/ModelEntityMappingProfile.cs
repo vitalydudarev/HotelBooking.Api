@@ -10,5 +10,9 @@ public class ModelEntityMappingProfile : Profile
     {
         CreateMap<Reservation, Database.Entities.Reservation>().ReverseMap();
         CreateMap<Hotel, Database.Entities.Hotel>().ReverseMap();
+        CreateMap<Room, Database.Entities.Room>().ReverseMap();
+        CreateMap<RoomType, Database.Entities.RoomType>().ReverseMap();
+        CreateMap<Facility, Database.Entities.Facility>().ReverseMap();
+        CreateMap<HotelFacility, Database.Entities.HotelFacility>().ReverseMap();
     }
 }

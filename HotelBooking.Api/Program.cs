@@ -1,4 +1,3 @@
-using HotelBooking.Api;
 using HotelBooking.Api.Middlewares;
 using HotelBooking.Database;
 using HotelBooking.Database.Repositories;
@@ -21,7 +20,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddEntityFrameworkNpgsql().AddDbContext<DatabaseContext>(opt =>
     opt.UseNpgsql(configuration.GetConnectionString("DatabaseContext")));
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IHotelRepository, HotelRepository>();

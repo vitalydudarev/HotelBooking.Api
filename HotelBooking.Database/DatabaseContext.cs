@@ -11,8 +11,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<Hotel> Hotels { get; set; }
-    public DbSet<FacilityEntity> Facilities { get; set; }
-    public DbSet<HotelFacilityEntity> HotelFacilities { get; set; }
+    public DbSet<Facility> Facilities { get; set; }
+    public DbSet<HotelFacility> HotelFacilities { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<RoomType> RoomTypes { get; set; }
     public DbSet<Reservation> Reservations { get; set; }

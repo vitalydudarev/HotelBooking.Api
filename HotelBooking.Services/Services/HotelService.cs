@@ -29,6 +29,11 @@ public class HotelService : IHotelService
     {
         return _hotelCache.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize);
     }
+    
+    public async Task<Hotel> GetHotelDetailsAsync(long id)
+    {
+        return await _hotelRepository.GetHotelDetailsAsync(id);
+    }
 
     public IEnumerable<Hotel> GetPopularHotels()
     {
@@ -59,8 +64,7 @@ public class HotelService : IHotelService
     {
         _logger.LogInformation("Initializing cache");
         
-        var hotelEntities = _hotelRepository.GetHotels();
-        var hotels = _mapper.Map<IEnumerable<Hotel>>(hotelEntities);
+        var hotels = _hotelRepository.GetHotels();
         
         foreach (var hotel in hotels)
         {

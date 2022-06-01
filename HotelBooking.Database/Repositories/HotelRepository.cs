@@ -38,4 +38,17 @@ public class HotelRepository : IHotelRepository
         
         return _mapper.Map<IEnumerable<Hotel>>(hotels);
     }
+    
+    public async Task<Hotel> GetHotelDetailsAsync(long id)
+    {
+        var hotel = await _context.Hotels.AsNoTracking()
+            .Where(a => a.Id == id)
+            .Include(c => c.Rooms)
+                .ThenInclude(e => e.RoomType)
+            .Include(b => b.HotelFacilities)
+                .ThenInclude(d => d.Facility)
+            .FirstOrDefaultAsync();
+        
+        return _mapper.Map<Hotel>(hotel);
+    }
 }

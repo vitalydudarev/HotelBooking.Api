@@ -7,6 +7,6 @@ public class Hotel
     public string Description { get; set; }
     public string Address { get; set; }
     
-    public ICollection<HotelFacilityEntity> Facilities { get; set; }
+    public ICollection<HotelFacility> HotelFacilities { get; set; }
     public ICollection<Room> Rooms { get; set; }
 }

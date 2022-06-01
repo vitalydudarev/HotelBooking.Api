@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HotelBooking.Database.Configurations;
 
-public class HotelFacilityConfiguration : IEntityTypeConfiguration<HotelFacilityEntity>
+public class HotelFacilityConfiguration : IEntityTypeConfiguration<HotelFacility>
 {
-    public void Configure(EntityTypeBuilder<HotelFacilityEntity> builder)
+    public void Configure(EntityTypeBuilder<HotelFacility> builder)
     {
         builder
             .HasKey(a => new { a.HotelId, a.FacilityId });
         builder
             .HasOne(a => a.Hotel)
-            .WithMany(b => b.Facilities)
+            .WithMany(b => b.HotelFacilities)
             .HasForeignKey(c => c.HotelId);
         builder
             .HasOne(a => a.Facility)

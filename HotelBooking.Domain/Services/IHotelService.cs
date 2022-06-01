@@ -5,6 +5,7 @@ namespace HotelBooking.Domain.Services;
 public interface IHotelService
 {
     IEnumerable<Hotel> GetHotels(int pageNumber, int pageSize);
+    Task<Hotel> GetHotelDetailsAsync(long id);
     IEnumerable<Hotel> GetPopularHotels();
     IEnumerable<Hotel> GetRecommendedHotels();
     IEnumerable<Hotel> GetTopRatedHotels();
