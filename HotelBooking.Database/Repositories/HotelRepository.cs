@@ -41,7 +41,8 @@ public class HotelRepository : IHotelRepository
     
     public async Task<Hotel> GetHotelDetailsAsync(long id)
     {
-        var hotel = await _context.Hotels.AsNoTracking()
+        var hotel = await _context.Hotels
+            .AsNoTracking()
             .Where(a => a.Id == id)
             .Include(c => c.Rooms)
                 .ThenInclude(e => e.RoomType)
@@ -50,5 +51,16 @@ public class HotelRepository : IHotelRepository
             .FirstOrDefaultAsync();
         
         return _mapper.Map<Hotel>(hotel);
+    }
+    
+    // TODO: ideally we should add hotels ratings to HotelCache
+    public async Task<IEnumerable<Hotel>> GetHotelsWithReviewsAsync()
+    {
+        var hotels = await _context.Hotels
+            .AsNoTracking()
+            .Include(a => a.Reviews)
+            .ToListAsync();
+
+        return _mapper.Map<IEnumerable<Hotel>>(hotels);
     }
 }

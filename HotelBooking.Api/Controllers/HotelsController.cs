@@ -28,6 +28,21 @@ public class HotelsController : ControllerBase
         return Ok(hotelDtos);
     }
     
+    [HttpGet("selection")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<HotelDto>))]
+    public async Task<IActionResult> GetSelection([FromQuery] string query)
+    {
+        if (query == "top-rated")
+        {
+            var hotels = await _hotelService.GetTopRatedHotelsAsync();
+            var hotelDtos = _mapper.Map<IEnumerable<HotelDto>>(hotels);
+
+            return Ok(hotelDtos);
+        }
+        
+        return Ok(Array.Empty<HotelDto>());
+    }
+    
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HotelDetailsDto))]
     public async Task<IActionResult> GetHotelDetails(long id)

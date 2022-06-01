@@ -9,4 +9,5 @@ public class Hotel
     
     public ICollection<Room> Rooms { get; set; }
     public ICollection<HotelFacility> HotelFacilities { get; set; }
+    public ICollection<HotelReview> Reviews { get; set; }
 }

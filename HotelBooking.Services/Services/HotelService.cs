@@ -42,9 +42,13 @@ public class HotelService : IHotelService
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Hotel> GetTopRatedHotels()
+    public async Task<IEnumerable<Hotel>> GetTopRatedHotelsAsync()
     {
-        throw new NotImplementedException();
+        // TODO: calculate average rating on database level
+        var hotels = await _hotelRepository.GetHotelsWithReviewsAsync();
+        var ratedHotels = hotels.ToDictionary(a => a, b => b.Reviews.Count > 0 ? b.Reviews.Average(c => c.Rate) : 0.0);
+
+        return ratedHotels.OrderByDescending(a => a.Value).Take(10).Select(b => b.Key);
     }
 
     public async Task<IEnumerable<Hotel>> SearchHotelAsync(string query)
