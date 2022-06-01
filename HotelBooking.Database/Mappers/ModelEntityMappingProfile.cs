@@ -1,8 +1,7 @@
 using AutoMapper;
 using HotelBooking.Domain.Models;
-using Reservation = HotelBooking.Domain.Models.Reservation;
 
-namespace HotelBooking.Database;
+namespace HotelBooking.Database.Mappers;
 
 public class ModelEntityMappingProfile : Profile
 {
@@ -14,5 +13,6 @@ public class ModelEntityMappingProfile : Profile
         CreateMap<RoomType, Database.Entities.RoomType>().ReverseMap();
         CreateMap<Facility, Database.Entities.Facility>().ReverseMap();
         CreateMap<HotelFacility, Database.Entities.HotelFacility>().ReverseMap();
+        CreateMap<HotelReview, Database.Entities.HotelReview>().ReverseMap();
     }
 }

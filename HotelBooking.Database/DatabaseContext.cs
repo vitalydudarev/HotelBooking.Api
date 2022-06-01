@@ -9,7 +9,7 @@ public class DatabaseContext : DbContext
 {
     private readonly IConfiguration? _configuration;
 
-    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<Hotel> Hotels { get; set; }
     public DbSet<Facility> Facilities { get; set; }
     public DbSet<HotelFacility> HotelFacilities { get; set; }
