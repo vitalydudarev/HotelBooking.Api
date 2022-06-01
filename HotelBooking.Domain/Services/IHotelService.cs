@@ -9,6 +9,6 @@ public interface IHotelService
     IEnumerable<Hotel> GetPopularHotels();
     IEnumerable<Hotel> GetRecommendedHotels();
     IEnumerable<Hotel> GetTopRatedHotels();
-    IEnumerable<Hotel> SearchHotel(string query);
+    Task<IEnumerable<Hotel>> SearchHotelAsync(string query);
     IEnumerable<string> GetTopDestinations();
 }

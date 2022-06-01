@@ -1,4 +1,3 @@
-using AutoMapper;
 using HotelBooking.Domain.Models;
 using HotelBooking.Domain.Repositories;
 using HotelBooking.Domain.Services;
@@ -12,12 +11,10 @@ public class HotelService : IHotelService
     private readonly ILogger<HotelService> _logger;
     private readonly IHotelRepository _hotelRepository;
     private readonly IHotelCache _hotelCache;
-    private readonly IMapper _mapper;
 
-    public HotelService(ILogger<HotelService> logger, IMapper mapper, IHotelRepository hotelRepository, IHotelCache hotelCache)
+    public HotelService(ILogger<HotelService> logger, IHotelRepository hotelRepository, IHotelCache hotelCache)
     {
         _logger = logger;
-        _mapper = mapper;
         _hotelRepository = hotelRepository;
         _hotelCache = hotelCache;
 
@@ -50,9 +47,25 @@ public class HotelService : IHotelService
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Hotel> SearchHotel(string query)
+    public async Task<IEnumerable<Hotel>> SearchHotelAsync(string query)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("Executing hotel search by query {Query}", query);
+        
+        return await Task.Run(() =>
+        {
+            var result = new List<Hotel>();
+
+            foreach (var hotel in _hotelCache.GetAll())
+            {
+                // Contains is not the best solution for text search
+                if (hotel.Name.Contains(query) || hotel.Address.Contains(query))
+                {
+                    result.Add(hotel);
+                }
+            }
+
+            return result;
+        });
     }
 
     public IEnumerable<string> GetTopDestinations()

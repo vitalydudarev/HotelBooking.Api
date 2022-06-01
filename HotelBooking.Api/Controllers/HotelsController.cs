@@ -37,4 +37,14 @@ public class HotelsController : ControllerBase
 
         return Ok(hotelDetailsDto);
     }
+    
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<HotelDto>))]
+    public async Task<IActionResult> Search([FromBody] string query)
+    {
+        var hotel = await _hotelService.SearchHotelAsync(query);
+        var hotelDetailsDto = _mapper.Map<IEnumerable<HotelDto>>(hotel);
+
+        return Ok(hotelDetailsDto);
+    }
 }
